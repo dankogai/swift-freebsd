@@ -45,10 +45,14 @@ discussed below.
 
 ### System Requirements
 
-OS X, Ubuntu Linux LTS, and the latest Ubuntu Linux release are the current
-supported host development operating systems.
+OS X, FreeBSD 10, Ubuntu Linux LTS, and the latest Ubuntu Linux release are
+the current supported host development operating systems.
 
 For OS X, you need [the latest Xcode](https://developer.apple.com/xcode/downloads/).
+
+For FreeBSD, you'll need the following development dependencies:
+
+    sudo pkg install git cmake ninja clang36 icu libxml2 sqlite3 swig python27 ncurses pkgconf
 
 For Ubuntu, you'll need the following development dependencies:
 
@@ -56,6 +60,12 @@ For Ubuntu, you'll need the following development dependencies:
 
 Note: LLDB currently requires at least swig-1.3.40 but will successfully build
 with version 2 shipped with Ubuntu.
+
+If you are building on FreeBSD, you'll need to explicitly request the
+pkg-installed clang36 compilers when building:
+
+     export HOST_CC=clang36
+     export HOST_CXX=clang++36
 
 If you are building on Ubuntu 14.04 LTS, you'll need to upgrade your clang
 compiler for C++14 support and create a symlink:
