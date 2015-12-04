@@ -52,7 +52,7 @@ For OS X, you need [the latest Xcode](https://developer.apple.com/xcode/download
 
 For FreeBSD, you'll need the following development dependencies:
 
-    sudo pkg install git cmake ninja clang36 icu libxml2 sqlite3 swig python27 ncurses pkgconf
+    sudo pkg install git cmake ninja clang36 libc++ icu libxml2 sqlite3 swig python27 ncurses pkgconf
 
 For Ubuntu, you'll need the following development dependencies:
 
