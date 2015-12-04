@@ -26,3 +26,5 @@
 // LINUX: clang++{{"? }}
 // LINUX: lib/swift/clang/{{[^ ]*}}/lib/linux/libclang_rt.profile-x86_64.a
 
+// FREEBSD: clang++{{"? }}
+// FREEBSD: lib/swift/clang/{{[^ ]*}}/lib/freebsd/libclang_rt.profile-x86_64.a

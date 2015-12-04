@@ -14,6 +14,9 @@
 // RUN: %swiftc_driver -driver-print-jobs -target x86_64-unknown-linux-gnu -Ffoo -framework bar -Lbaz -lboo -Xlinker -undefined %s 2>&1 > %t.linux.txt
 // RUN: FileCheck -check-prefix LINUX %s < %t.linux.txt
 
+// RUN: %swiftc_driver -driver-print-jobs -target x86_64-freebsd10 -Ffoo -framework bar -Lbaz -lboo -Xlinker -undefined %s 2>&1 > %t.freebsd.txt
+// RUN: FileCheck -check-prefix LINUX %s < %t.freebsd.txt
+
 // RUN: %swiftc_driver -driver-print-jobs -emit-library -target x86_64-apple-macosx10.9.1 %s -sdk %S/../Inputs/clang-importer-sdk -lfoo -framework bar -Lbaz -Fgarply -Xlinker -undefined -Xlinker dynamic_lookup -o sdk.out 2>&1 > %t.complex.txt
 // RUN: FileCheck %s < %t.complex.txt
 // RUN: FileCheck -check-prefix COMPLEX %s < %t.complex.txt
@@ -32,7 +35,7 @@
 
 // FIXME: Need to set up a sysroot for osx so the DEBUG checks work on linux
 // rdar://problem/19692770
-// XFAIL: linux
+// XFAIL: linux,freebsd
 
 // CHECK: swift
 // CHECK: -o [[OBJECTFILE:.*]]
@@ -105,6 +108,23 @@
 // LINUX-DAG: -lboo
 // LINUX-DAG: -Xlinker -undefined
 // LINUX: -o linker
+
+
+// FREEBSD: swift
+// FREEBSD: -o [[OBJECTFILE:.*]]
+
+// FREEBSD: clang++{{"? }}
+// FREEBSD-DAG: [[OBJECTFILE]]
+// FREEBSD-DAG: -lswiftCore
+// FREEBSD-DAG: -L [[STDLIB_PATH:[^ ]+/lib/swift]]
+// FREEBSD-DAG: -Xlinker -rpath -Xlinker [[STDLIB_PATH]]
+// FREEBSD-DAG: -Xlinker -T /{{[^ ]+}}/freebsd/x86_64/swift.ld
+// FREEBSD-DAG: -F foo
+// FREEBSD-DAG: -framework bar
+// FREEBSD-DAG: -L baz
+// FREEBSD-DAG: -lboo
+// FREEBSD-DAG: -Xlinker -undefined
+// FREEBSD: -o linker
 
 // COMPLEX: bin/ld{{"? }}
 // COMPLEX-DAG: -dylib
