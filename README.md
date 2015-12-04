@@ -52,7 +52,10 @@ For OS X, you need [the latest Xcode](https://developer.apple.com/xcode/download
 
 For FreeBSD, you'll need the following development dependencies:
 
-    sudo pkg install git cmake ninja clang36 libc++ icu libxml2 sqlite3 swig python27 ncurses pkgconf
+    $ su -m
+    # sudo pkg install sudo
+    $ exit
+    $ sudo pkg install git cmake ninja clang36 libc++ icu libxml2 sqlite3 swig python27 ncurses pkgconf bash
 
 For Ubuntu, you'll need the following development dependencies:
 
@@ -64,8 +67,13 @@ with version 2 shipped with Ubuntu.
 If you are building on FreeBSD, you'll need to explicitly request the
 pkg-installed clang36 compilers when building:
 
-     export HOST_CC=clang36
-     export HOST_CXX=clang++36
+     $ export HOST_CC=clang36
+     $ export HOST_CXX=clang++36
+
+You also need to symlink `python` to `python2`
+
+    $ chdir /usr/local/bin
+    $ sudo ln -s python2.7 python
 
 If you are building on Ubuntu 14.04 LTS, you'll need to upgrade your clang
 compiler for C++14 support and create a symlink:
